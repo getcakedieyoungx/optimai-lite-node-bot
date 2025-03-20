@@ -17,7 +17,7 @@ Optimai Lite Node için otomatik ping ve ödül toplama botu. Bu bot, node'unuzu
 
 1. Repoyu klonlayın:
 ```bash
-git clone https://github.com/yourusername/optimai-lite-node-bot.git
+git clone https://github.com/getcakedieyoungx/optimai-lite-node-bot.git
 cd optimai-lite-node-bot
 ```
 
@@ -55,11 +55,19 @@ npm start
 
 ## Özelleştirme
 
-Bot davranışını `.env` dosyasındaki değişkenlerle özelleştirebilirsiniz:
+Bot otomatik olarak en uygun zamanlamaları kullanır:
 
-- `PING_CRON`: Ping gönderme aralığı (varsayılan: her 5 dakikada bir)
-- `DAILY_CLAIM_CRON`: Günlük ödül alma zamanı (varsayılan: her gün saat 12:00)
-- `WEEKLY_CLAIM_CRON`: Haftalık ödül alma zamanı (varsayılan: her Pazartesi saat 12:00)
+- Ping: Her 5 dakikada bir otomatik ping gönderir
+- Daily Claim: Her hesap için her gün farklı rastgele bir saatte otomatik claim yapar
+- Weekly Claim: Her hesap için her hafta farklı rastgele bir günde ve saatte otomatik claim yapar
+
+Bu şekilde her hesap farklı zamanlarda işlem yaparak daha doğal bir davranış sergiler.
+
+İsterseniz `.env` dosyasında bu zamanlamaları özelleştirebilirsiniz:
+
+- `PING_CRON`: Ping gönderme aralığı
+- `DAILY_CLAIM_CRON`: Günlük ödül alma zamanı
+- `WEEKLY_CLAIM_CRON`: Haftalık ödül alma zamanı
 
 ## İletişim ve Destek
 
