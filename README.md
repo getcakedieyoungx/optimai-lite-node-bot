@@ -17,36 +17,36 @@ Bu bot, Optimai Lite Node'unuzu otomatik olarak yönetmenizi sağlar. Node'unuzu
 ## Kurulum
 
 1. Repoyu klonlayın:
-\`\`\`bash
+```
 git clone https://github.com/getcakedieyoungx/optimai-lite-node-bot.git
 cd optimai-lite-node-bot
-\`\`\`
+```
 
 2. Gerekli paketleri yükleyin:
-\`\`\`bash
+```
 npm install
-\`\`\`
+```
 
 3. Konfigürasyon:
-   - \`.env.example\` dosyasını \`.env\` olarak kopyalayın
-   - \`.env\` dosyasını düzenleyerek gerekli bilgileri girin
-   - (Opsiyonel) Çoklu hesap için \`accounts.json\` oluşturun
-   - (Opsiyonel) Proxy kullanımı için \`proxy.txt\` oluşturun
+   - `.env.example` dosyasını `.env` olarak kopyalayın
+   - `.env` dosyasını düzenleyerek gerekli bilgileri girin
+   - (Opsiyonel) Çoklu hesap için `accounts.json` oluşturun
+   - (Opsiyonel) Proxy kullanımı için `proxy.txt` oluşturun
 
 ## Kullanım
 
 Botu başlatmak için:
-\`\`\`bash
+```
 npm start
-\`\`\`
+```
 
 ## Özelleştirme
 
 ### Çoklu Hesap
 
-Birden fazla hesabı yönetmek için \`accounts.json\` dosyası oluşturun:
+Birden fazla hesabı yönetmek için `accounts.json` dosyası oluşturun:
 
-\`\`\`json
+```json
 [
   {
     "refreshToken": "hesap1_refresh_token",
@@ -57,16 +57,16 @@ Birden fazla hesabı yönetmek için \`accounts.json\` dosyası oluşturun:
     "nodeToken": []
   }
 ]
-\`\`\`
+```
 
 ### Proxy Kullanımı
 
-Proxy kullanmak için \`proxy.txt\` dosyası oluşturun:
+Proxy kullanmak için `proxy.txt` dosyası oluşturun:
 
-\`\`\`
+```
 http://kullanici:sifre@ip:port
 http://kullanici:sifre@ip:port
-\`\`\`
+```
 
 ### Zamanlama
 
@@ -75,7 +75,7 @@ Bot, her hesap için farklı rastgele zamanlarda işlem yapar:
 - Daily Claim: Her hesap için günde bir kez, rastgele bir saatte
 - Weekly Claim: Her hesap için haftada bir kez, rastgele bir gün ve saatte
 
-İsterseniz \`.env\` dosyasından CRON ayarlarını özelleştirebilirsiniz.
+İsterseniz `.env` dosyasından CRON ayarlarını özelleştirebilirsiniz.
 
 ## İletişim ve Destek
 
