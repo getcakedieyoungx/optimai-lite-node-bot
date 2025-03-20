@@ -1,0 +1,22 @@
+{
+  "name": "optimai-lite-node-bot",
+  "version": "1.0.0",
+  "description": "Optimai Lite Node için otomatik ping ve ödül toplama botu",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [
+    "optimai",
+    "node",
+    "bot",
+    "automation"
+  ],
+  "author": "getcakedieyoungx",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.7",
+    "dotenv": "^16.4.1",
+    "node-cron": "^3.0.3"
+  }
+}
