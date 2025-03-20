@@ -1,5 +1,7 @@
 /**
  * Optimai Lite Node Bot
+ * Bu bot Optimai Lite Node'un online durumunu kontrol eder
+ * ve daily/weekly claim işlemlerini otomatik yapar.
  */
 
 const axios = require('axios');
@@ -41,23 +43,6 @@ const API_URL = process.env.API_URL || 'https://api.optimai.network';
 
 // Son bakiye bilgileri
 const balances = new Map();
-
-// ASCII Art Banner
-const banner = `
- ██████╗ ███████╗████████╗ ██████╗ █████╗ ██╗  ██╗███████╗       
-██╔════╝ ██╔════╝╚══██╔══╝██╔════╝██╔══██╗██║ ██╔╝██╔════╝       
-██║  ███╗█████╗     ██║   ██║     ███████║█████╔╝ █████╗         
-██║   ██║██╔══╝     ██║   ██║     ██╔══██║██╔═██╗ ██╔══╝         
-╚██████╔╝███████╗   ██║   ╚██████╗██║  ██║██║  ██╗███████╗       
- ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝       
-██████╗ ██╗███████╗██╗   ██╗ ██████╗ ██╗   ██╗███╗   ██╗ ██████╗ 
-██╔══██╗██║██╔════╝╚██╗ ██╔╝██╔═══██╗██║   ██║████╗  ██║██╔════╝ 
-██║  ██║██║█████╗   ╚████╔╝ ██║   ██║██║   ██║██╔██╗ ██║██║  ███╗
-██║  ██║██║██╔══╝    ╚██╔╝  ██║   ██║██║   ██║██║╚██╗██║██║   ██║
-██████╔╝██║███████╗   ██║   ╚██████╔╝╚██████╔╝██║ ╚████║╚██████╔╝
-╚═════╝ ╚═╝╚══════╝   ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ 
-       GETCAKE DIEYOUNGX - t.me/getcakedieyoungx
-`;
 
 // İşlem logları
 const logs = new Map();
@@ -109,6 +94,23 @@ function addLog(accountIndex, message) {
     }
     printInfo();
 }
+
+// ASCII Art Banner
+const banner = `
+ ██████╗ ███████╗████████╗ ██████╗ █████╗ ██╗  ██╗███████╗       
+██╔════╝ ██╔════╝╚══██╔══╝██╔════╝██╔══██╗██║ ██╔╝██╔════╝       
+██║  ███╗█████╗     ██║   ██║     ███████║█████╔╝ █████╗         
+██║   ██║██╔══╝     ██║   ██║     ██╔══██║██╔═██╗ ██╔══╝         
+╚██████╔╝███████╗   ██║   ╚██████╗██║  ██║██║  ██╗███████╗       
+ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝       
+██████╗ ██╗███████╗██╗   ██╗ ██████╗ ██╗   ██╗███╗   ██╗ ██████╗ 
+██╔══██╗██║██╔════╝╚██╗ ██╔╝██╔═══██╗██║   ██║████╗  ██║██╔════╝ 
+██║  ██║██║█████╗   ╚████╔╝ ██║   ██║██║   ██║██╔██╗ ██║██║  ███╗
+██║  ██║██║██╔══╝    ╚██╔╝  ██║   ██║██║   ██║██║╚██╗██║██║   ██║
+██████╔╝██║███████╗   ██║   ╚██████╔╝╚██████╔╝██║ ╚████║╚██████╔╝
+╚═════╝ ╚═╝╚══════╝   ╚═╝    ╚═════╝  ╚═════╝ ╚═╝  ╚═══╝ ╚═════╝ 
+       GETCAKE DIEYOUNGX - t.me/getcakedieyoungx
+`;
 
 // Bilgi mesajı yazdırma
 function printInfo() {
@@ -277,6 +279,18 @@ async function checkBalance(accountIndex) {
     }
 }
 
+// Rastgele saat ve dakika oluşturma fonksiyonu
+function getRandomTime() {
+    const hour = Math.floor(Math.random() * 24); // 0-23 arası
+    const minute = Math.floor(Math.random() * 60); // 0-59 arası
+    return { hour, minute };
+}
+
+// Rastgele gün oluşturma fonksiyonu (0-6 arası, 0=Pazar)
+function getRandomDay() {
+    return Math.floor(Math.random() * 7);
+}
+
 // Bot başlangıcı
 (async () => {
     clearScreen();
@@ -305,19 +319,27 @@ async function checkBalance(accountIndex) {
         }
     });
     
-    const dailySchedule = process.env.DAILY_CLAIM_CRON || '0 12 * * *';
-    cron.schedule(dailySchedule, async () => {
-        for (let i = 0; i < accounts.length; i++) {
+    // Her hesap için farklı rastgele zamanlarda daily claim
+    for (let i = 0; i < accounts.length; i++) {
+        const dailyTime = getRandomTime();
+        const dailySchedule = process.env.DAILY_CLAIM_CRON || `${dailyTime.minute} ${dailyTime.hour} * * *`;
+        cron.schedule(dailySchedule, async () => {
             await performDailyCheckin(i);
-        }
-    });
+        });
+        addLog(i, `Daily claim zamanı ayarlandı: ${dailyTime.hour}:${dailyTime.minute.toString().padStart(2, '0')}`);
+    }
     
-    const weeklySchedule = process.env.WEEKLY_CLAIM_CRON || '0 12 * * 1';
-    cron.schedule(weeklySchedule, async () => {
-        for (let i = 0; i < accounts.length; i++) {
+    // Her hesap için farklı rastgele günlerde weekly claim
+    for (let i = 0; i < accounts.length; i++) {
+        const weeklyTime = getRandomTime();
+        const weeklyDay = getRandomDay();
+        const weeklySchedule = process.env.WEEKLY_CLAIM_CRON || `${weeklyTime.minute} ${weeklyTime.hour} * * ${weeklyDay}`;
+        cron.schedule(weeklySchedule, async () => {
             await claimWeeklyReward(i);
-        }
-    });
+        });
+        const days = ['Pazar', 'Pazartesi', 'Salı', 'Çarşamba', 'Perşembe', 'Cuma', 'Cumartesi'];
+        addLog(i, `Weekly claim zamanı ayarlandı: ${days[weeklyDay]} ${weeklyTime.hour}:${weeklyTime.minute.toString().padStart(2, '0')}`);
+    }
     
     // Her 12 saatte bir token yenileme
     cron.schedule('0 */12 * * *', async () => {
