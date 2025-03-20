@@ -77,11 +77,10 @@ Bot, her hesap için farklı rastgele zamanlarda işlem yapar:
 
 İsterseniz `.env` dosyasından CRON ayarlarını özelleştirebilirsiniz.
 
-## İletişim ve Destek
+ Join tg, I will post bots there too.
+T.me/getcakedieyoungx
 
-Telegram: [t.me/getcakedieyoungx](https://t.me/getcakedieyoungx)
+For donations:
+EVM: 0xE065339713A8D9BF897d595ED89150da521a7d09
 
-## Bağış Adresleri
-
-EVM: 0x0000000000000000000000000000000000000000
-Solana: 0x0000000000000000000000000000000000000000
+SOLANA: CcBPMkpMbZ4TWE8HeUWyv9CkEVqPLJ5gYe163g5SR4Vf
