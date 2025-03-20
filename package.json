@@ -6,12 +6,6 @@
   "scripts": {
     "start": "node index.js"
   },
-  "keywords": [
-    "optimai",
-    "node",
-    "bot",
-    "automation"
-  ],
   "author": "getcakedieyoungx",
   "license": "MIT",
   "dependencies": {
